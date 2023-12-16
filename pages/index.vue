@@ -79,8 +79,8 @@ const getProducts = async () => {
     products.value = res.data.data
 }
 
-const addItemToCart = (productId: string | number | {}) => {
-    const formData = {
+const addItemToCart = (productId: string | number) => {
+    const formData: any = {
         productId: productId
     }
     cart.addToCart(formData)
@@ -92,4 +92,4 @@ onMounted(() => {
 })
 </script>
 
-<style scoped></style>~/stores/cart
+<style scoped></style>
