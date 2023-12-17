@@ -1,7 +1,7 @@
 <template>
-    <div class="container m-24">
+    <div class="container mt-24">
         <div class="grid grid-cols-12">
-            <div class="col-span-7">
+            <div class="col-span-7 mx-8">
                 <div>
                     Shopping Cart
                 </div>
@@ -46,9 +46,40 @@
                     </v-table>
                 </div>
             </div>
-            <div class="col-span-5">
+            <div class="col-span-5 mx-12">
                 <div>
-                    Cart Totals
+                    Cart Sub Total
+                </div>
+                <div>
+                    <v-table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Subtotal
+                                </td>
+                                <td>
+                                    172000
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Shipping
+                                </td>
+                                <td>
+                                    <div>Free Shipping: No</div>
+                                    <div>Shipping Charges: 200</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total
+                                </td>
+                                <td>
+                                    1720200
+                                </td>
+                            </tr>
+                        </tbody>
+                    </v-table>
                 </div>
             </div>
         </div>
