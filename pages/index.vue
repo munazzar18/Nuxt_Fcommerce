@@ -81,7 +81,8 @@ const getProducts = async () => {
 
 const addItemToCart = (productId: string | number) => {
     const formData: any = {
-        productId: productId
+        productId: productId,
+        quantity: 1
     }
     cart.addToCart(formData)
 }

@@ -13,6 +13,7 @@ export const saveToken = (token: string): void => {
     }
 };
 
+
 export const destroyToken = (): void => {
     if (process.client) {
         window.localStorage.removeItem(ID_TOKEN_KEY);

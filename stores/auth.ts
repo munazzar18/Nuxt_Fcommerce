@@ -6,11 +6,12 @@ import JwtService from "@/services/JwtService";
 const baseUrl = "http://localhost:5005/api/"
 
 export interface User {
-    id: number;
-    username: string;
-    email: string;
-    password: string;
     access_token: string;
+    user: {
+        id: string;
+        username: string;
+        email: string;
+    }
 }
 
 export const useAuthStore = defineStore("auth", () => {
@@ -20,10 +21,15 @@ export const useAuthStore = defineStore("auth", () => {
     const isAuthenticated = ref(!!JwtService.getToken());
 
     function setAuth(authUser: User) {
+        console.log("dksdhsadjsalkdjl")
         isAuthenticated.value = true;
         user.value = authUser;
+        console.log("USER:", authUser)
         errors.value = {};
         JwtService.saveToken(user.value.access_token);
+        if (process.client) {
+            window.localStorage.setItem('id', user.value.user.id);
+        }
     }
 
     function setError(error: any) {
@@ -35,11 +41,12 @@ export const useAuthStore = defineStore("auth", () => {
         user.value = {} as User;
         errors.value = [];
         JwtService.destroyToken();
-
+        localStorage.removeItem('id')
     }
 
     async function login(credentials: User) {
         try {
+            console.log("ye chala")
             const res = await ApiService.post(`${baseUrl}auth/login`, credentials)
             let data = res.data.data
             setAuth(data)

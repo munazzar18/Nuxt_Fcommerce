@@ -8,9 +8,9 @@ export const useCartStore = defineStore('cart', {
         cartCount: 0,
     }),
     actions: {
-        async addToCart(productId: string | number) {
+        async addToCart(formData: string | number | {},) {
             try {
-                const response = await ApiService.post(`${url}cart`, productId);
+                const response = await ApiService.post(`${url}order-item`, formData);
                 this.cartCount = await response.data.data
                 return this.cartCount
             } catch (error) {
@@ -19,19 +19,19 @@ export const useCartStore = defineStore('cart', {
         },
         async getCart(userId: string | number) {
             try {
-                const response = await ApiService.get(`${url}cart/userCart/${userId}`)
+                const response = await ApiService.get(`${url}order-item/userId/${userId}`)
                 const carts = await response.data.data
-                if(carts.length > 0){
-                const oneCart = carts ? carts.map((el: any) => el.quantity) : 0
-                const grandTotal = oneCart.reduce((el: number, cl: number) => el + cl)
-                this.cartCount = grandTotal
-                return this.cartCount
+                if (carts.length > 0) {
+                    const oneCart = carts ? carts.map((el: any) => el.quantity) : 0
+                    const grandTotal = oneCart.reduce((el: number, cl: number) => el + cl)
+                    this.cartCount = grandTotal
+                    return this.cartCount
                 }
                 else {
                     this.cartCount = 0
                     return this.cartCount
                 }
-                
+
             } catch (error) {
                 console.error('Error adding to cart:', error);
             }

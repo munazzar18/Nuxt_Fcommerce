@@ -27,14 +27,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="c in cart" :key="c.id" >
-                                <td><img :src="`http://localhost:5005${c.product.images[0]}`" class="w-[50%] aspect-[3/2] object-contain p-6" /> </td>
-                                <td>{{ c.product.title }}</td>
-                                <td>{{ c.product.price }}</td>
-                                <td>{{ c.quantity }}</td>
-                                <td>{{ c.product.price * c.quantity }}</td>
+                            <tr v-for="item in orderItems" :key="item.id">
+                                <td><img :src="`http://localhost:5005${item.product.images[0]}`"
+                                        class="w-[60%] aspect-[3/2] object-contain p-6" /> </td>
+                                <td>{{ item.product.title }}</td>
+                                <td>{{ item.product.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.totalPrice }}</td>
                             </tr>
-                            
+
 
                         </tbody>
                     </v-table>
@@ -83,19 +84,30 @@
 <script setup lang="ts">
 import ApiService from '~/services/ApiService';
 
+interface OrderItems {
+    id: number,
+    quantity: number,
+    totalPrice: number,
+    product: {
+        id: number,
+        title: string,
+        images: string[],
+        price: number,
+        quantity: number
+    }
+}
+
 
 const url = "http://localhost:5005/api/"
 
-const cart = ref([])
-
-const product = ref([])
+const orderItems = ref<OrderItems[]>([])
 
 const userId = 2
 
 const getUserCart = async () => {
-    const res = await ApiService.get(`${url}cart/userCart/${userId}`)
-    cart.value = res.data?.data
-    console.log("Cart:", cart.value)
+    const res = await ApiService.get(`${url}order-item/userId/${userId}`)
+    orderItems.value = res.data?.data
+    console.log("Cart:", orderItems.value)
 }
 
 onMounted(() => {

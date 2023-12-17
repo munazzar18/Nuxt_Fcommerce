@@ -1,5 +1,8 @@
 <template>
-    <v-app-bar rounded title="Fcommerce" color="indigo-darken-4" >
+    <v-app-bar color="indigo-darken-4">
+        <NuxtLink to="/">
+            <v-btn>Fcommerce</v-btn>
+        </NuxtLink>
         <template v-slot:append>
             <NuxtLink to="/cart">
                 <div class="relative mx-2">
