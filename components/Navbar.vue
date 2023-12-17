@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar rounded title="Fcommerce" class="colorGrad">
+    <v-app-bar rounded title="Fcommerce" color="indigo-darken-4" >
         <template v-slot:append>
             <NuxtLink to="/cart">
                 <div class="relative mx-2">
@@ -62,6 +62,16 @@ onMounted(async () => {
     getCart()
 
 });
+
+const colorGrad = ref(`
+  background: linear-gradient(
+    to right,
+    rgb(233, 213, 255),
+    rgb(192, 132, 252),
+    rgb(107, 33, 168)
+  )
+`)
+
 
 </script>
 

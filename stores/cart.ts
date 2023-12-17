@@ -21,10 +21,17 @@ export const useCartStore = defineStore('cart', {
             try {
                 const response = await ApiService.get(`${url}cart/userCart/${userId}`)
                 const carts = await response.data.data
-                const oneCart = carts.map((el: any) => el.quantity)
+                if(carts.length > 0){
+                const oneCart = carts ? carts.map((el: any) => el.quantity) : 0
                 const grandTotal = oneCart.reduce((el: number, cl: number) => el + cl)
                 this.cartCount = grandTotal
                 return this.cartCount
+                }
+                else {
+                    this.cartCount = 0
+                    return this.cartCount
+                }
+                
             } catch (error) {
                 console.error('Error adding to cart:', error);
             }
