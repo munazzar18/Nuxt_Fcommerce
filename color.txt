@@ -1,0 +1,12 @@
+NAV BAR
+bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900
+
+Border
+border border-gradient-to-t from-orange-500 to-yellow-300
+
+
+one product bg:
+to right
+bg-gradient-to-r from-green-200 via-green-300 to-blue-500
+to left
+bg-gradient-to-l from-green-200 via-green-300 to-blue-500

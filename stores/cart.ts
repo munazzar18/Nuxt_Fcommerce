@@ -6,13 +6,25 @@ const url = "http://localhost:5005/api/"
 export const useCartStore = defineStore('cart', {
     state: () => ({
         cartCount: 0,
+        msg: ""
     }),
     actions: {
         async addToCart(formData: string | number | {},) {
             try {
                 const response = await ApiService.post(`${url}order-item`, formData);
                 this.cartCount = await response.data.data
-                return this.cartCount
+                this.msg = await response.data.message
+                return this.cartCount, this.msg
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+            }
+        },
+        async removeFromCart(formData: string | number | {}) {
+            try {
+                const response = await ApiService.post(`${url}order-item/delete`, formData);
+                this.cartCount = await response.data.data
+                this.msg = await response.data.message
+                return this.cartCount, this.msg
             } catch (error) {
                 console.error('Error adding to cart:', error);
             }

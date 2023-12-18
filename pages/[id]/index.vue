@@ -1,65 +1,59 @@
 <template>
-    <div class="mt-24">
+    <div class="mt-4">
         <div class="grid grid-cols-12">
-            <div class="col-span-6 mx-8">
-                <v-carousel height="600">
-                    <v-carousel-item v-for="(image, i) in product?.images" :src="image" :key="i">
-                    </v-carousel-item>
-                </v-carousel>
-            </div>
-            <div class="col-span-6">
-                <div>
-                    <div class="px-4 sm:px-0">
-                        <h3 class=" font-bold text-2xl leading-7  text-gray-900">{{ product?.title }}</h3>
-                        <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{ product?.category.category }}</p>
-                    </div>
-                    <div class="mt-6 border-t border-gray-100">
-                        <dl class="divide-y divide-gray-100">
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Price</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Rs.{{ product?.price
-                                }}
-                                </dd>
-                            </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Stock Available</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ product?.quantity
-                                }}</dd>
-                            </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Description</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{
-                                    product?.description }}
-                                </dd>
-                            </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Order Now</dt>
-                                <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
-                                        <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                            <div class="flex w-0 flex-1 items-center">
-                                                <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                    <v-btn>Add To Cart</v-btn>
-                                                </div>
-                                                <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                    <v-btn>Buy Now</v-btn>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </div>
-                        </dl>
+            <div class="col-span-6 mx-4">
+                <div
+                    class="carousel carousel-center w-full h-full rounded-box bg-gradient-to-r from-green-200 via-green-300 to-blue-500">
+                    <div class="carousel-item " v-for="(image, index) in images" :key="index">
+                        <img :src="image" class="w-[100%] aspect-[3/2] object-contain mix-blend-darken" />
                     </div>
                 </div>
             </div>
+            <div class="col-span-6 mx-4 bg-gradient-to-l from-green-200 via-green-300 to-blue-500 p-6 rounded-box">
+                <div class="mb-4">
+                    <h1 class="font-bold text-3xl">{{ product?.title }}</h1>
+                    <span class="text-gray-200">{{ product?.category.category }}</span>
+                </div>
+                <div class="mb-4">
+                    <h2 class="font-semibold text-2xl underline underline-offset-4">Rs.{{ product?.price }}</h2>
+                </div>
+                <div class="mb-4 text-lg">
+                    <p>{{ product?.description }}</p>
+                </div>
+                <div class="mb-4">
+                    <div class="flex justify-start">
+                        <label for="quantity" class="font-bold text-xl mr-4">Quantity</label>
+                        <!-- <input id="quanity" type="number" class="input input-bordered input-info w-16 max-w-xs" /> -->
+                        <div class="flex items-center">
+                            <button class="btn btn-sm btn-circle mr-2" min="1" :disabled="quantity === 1"
+                                @click="quantity > 1 && (quantity -= 1)">
+                                <font-awesome-icon icon="fa-solid fa-minus" />
+                            </button>
+                            <input type="text" class="w-12 text-center border rounded-md px-2 py-1" min="1"
+                                v-model="quantity" readonly />
+                            <button class="btn btn-sm btn-circle ml-2" @click="quantity += 1"
+                                :disabled="quantity === product?.quantity">
+                                <font-awesome-icon icon="fa-solid fa-plus" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <button class="btn bg-gradient-to-l from-green-200 via-green-300 to-blue-500  w-80 mx-4">Buy
+                        Now</button>
+                    <button class="btn bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 text-white w-80 mx-4">Add To
+                        Cart</button>
+                </div>
 
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import ApiService from '~/services/ApiService';
+
+
 
 const url = "http://localhost:5005/api/"
 
@@ -79,13 +73,18 @@ interface Product {
     images: string[]
 }
 
+const quantity = ref(1)
+
 const product = ref<Product>()
+const images = ref()
 
 const getProduct = async () => {
     const res = await ApiService.get(`${url}product/${id}`)
-    console.log("RES:", res.data.data)
     product.value = res.data?.data
+    images.value = product.value?.images
 }
+
+
 
 onMounted(() => {
     getProduct()

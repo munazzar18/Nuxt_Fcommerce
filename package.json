@@ -12,22 +12,27 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "autoprefixer": "^10.4.16",
+    "daisyui": "^4.4.20",
     "nuxt": "^3.8.2",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.3.6",
-    "vite-plugin-vuetify": "^1.0.2",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5",
-    "vuetify": "^3.4.6"
+    "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-regular-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/vue-fontawesome": "^3.0.5",
     "@mdi/font": "^7.3.67",
     "@nuxt/types": "^2.17.2",
+    "@nuxtjs/tailwindcss": "^6.10.1",
     "@pinia/nuxt": "^0.4.10",
     "@types/vue": "^2.0.0",
     "axios": "^1.6.2",
+    "pinia": "^2.0.36",
     "typescript": "^5.3.3",
-    "vue-axios": "^3.5.0",
-    "pinia": "^2.0.36"
+    "vue-axios": "^3.5.0"
   }
 }

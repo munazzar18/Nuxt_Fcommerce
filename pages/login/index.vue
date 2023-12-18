@@ -1,31 +1,36 @@
 
 <template>
-    <div class="mt-32 w-full">
-        <div class="flex justify-center ">
-            <div class="flex bg-[#D19673] shadow-xl rounded-l-xl w-96">
+    <div class="w-full min-h-screen">
+        <div class="flex justify-center">
+            <div class="flex bg-[#D19673] shadow-2xl rounded-l-xl w-96 mt-28">
                 <img class="w-full aspect-[3/2] object-contain p-1" src="/ecommerce.png" />
             </div>
-            <div class="shadow-xl p-16 rounded-r-xl">
-                <h1 class="text-2xl  font-bold text-black">Welcome to Fcommerce</h1>
-                <h2 class="text-xl mb-3 text-black font-medium">Created & Designed by Munazzar</h2>
+            <div class="shadow-2xl p-16 rounded-r-xl mt-28">
+                <h1 class="text-2xl  font-bold text-white">Welcome to Fcommerce</h1>
+                <h2 class="text-xl mb-3 text-white font-medium">Created & Designed by Munazzar</h2>
                 <p class="text-red-500 font-semibold mb-1">{{ responseMessage }}</p>
-                <v-sheet class="bg-transparent" rounded>
-                    <v-form @submit.prevent="onSubmit">
-                        <v-text-field v-model="email" :readonly="loading" variant="outlined" class="mb-2 text-black"
-                            clearable label="Email"></v-text-field>
+                <form @submit.prevent="onSubmit">
+                    <label class="form-control w-full max-w-xs mb-8">
+                        <div class="label">
+                            <span class="label-text text-white">Email</span>
+                        </div>
+                        <input type="text" placeholder="Email" v-model="email"
+                            class="input input-bordered w-full max-w-xs" />
 
-                        <v-text-field v-model="password" variant="outlined" class="text-black" :readonly="loading" clearable
-                            label="Password" type="password" placeholder="Enter your password"></v-text-field>
+                    </label>
+                    <label class="form-control w-full max-w-xs mb-8">
+                        <div class="label">
+                            <span class="label-text text-white">Password</span>
+                        </div>
+                        <input type="password" placeholder="Password" v-model="password"
+                            class="input input-bordered w-full max-w-xs" />
 
-                        <br>
-
-                        <v-btn :loading="loading" block color="transparent" class="text-black" size="large" type="submit"
-                            variant="elevated">
-                            Sign In
-                        </v-btn>
-                    </v-form>
-                </v-sheet>
+                    </label>
+                    <button type="submit"
+                        class="btn bg-gradient-to-l from-green-200 via-green-300 to-blue-500  w-80">Login</button>
+                </form>
             </div>
+
         </div>
     </div>
 </template>
@@ -57,6 +62,7 @@ const onSubmit = async (values: any) => {
         navigateTo('/')
     }
     else {
+        console.log("ERROR:", error)
         responseMessage.value = error[5].data.message
     }
 
