@@ -83,7 +83,7 @@
 
 <script setup lang="ts">
 import ApiService from '~/services/ApiService';
-
+import UserService from '~/services/UserService';
 const cart = useCartStore()
 
 interface OrderItems {
@@ -104,6 +104,7 @@ interface SelectedItem {
     quantities: number;
 }
 
+const userId = ref()
 
 const url = "http://localhost:5005/api/"
 
@@ -112,13 +113,14 @@ const orderItems = ref<OrderItems[]>([])
 
 const alertMessage = ref('')
 
-const userId = 2
+const id = UserService.getUser()
+userId.value = id?.id
 
 const oneTotal = ref()
 const grandTotal = ref()
 
 const getUserCart = async () => {
-    const res = await ApiService.get(`${url}order-item/userId/${userId}`)
+    const res = await ApiService.get(`${url}order-item/userId/${userId.value}`)
     orderItems.value = res.data?.data
     oneTotal.value = orderItems.value.map((el) => el.totalPrice)
     grandTotal.value = oneTotal.value.reduce((pv: number, cv: number) => pv + cv)
@@ -206,6 +208,7 @@ const checkOut = async () => {
 }
 
 onMounted(() => {
+
     getUserCart()
 })
 

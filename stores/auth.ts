@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import ApiService from "@/services/ApiService";
 import JwtService from "@/services/JwtService";
+import UserService from "@/services/UserService";
 
 const baseUrl = "http://localhost:5005/api/"
 
@@ -25,9 +26,7 @@ export const useAuthStore = defineStore("auth", () => {
         user.value = authUser;
         errors.value = {};
         JwtService.saveToken(user.value.access_token);
-        if (process.client) {
-            window.localStorage.setItem('id', user.value.user.id);
-        }
+        UserService.saveUser(user.value.user)
     }
 
     function setError(error: any) {
@@ -39,14 +38,14 @@ export const useAuthStore = defineStore("auth", () => {
         user.value = {} as User;
         errors.value = [];
         JwtService.destroyToken();
-        localStorage.removeItem('id')
+        UserService.removeUser()
     }
 
     async function login(credentials: User) {
         try {
-            console.log("ye chala")
             const res = await ApiService.post(`${baseUrl}auth/login`, credentials)
             let data = res.data.data
+
             setAuth(data)
         } catch (error) {
             setError(error)

@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-28 flex flex-wrap justify-around">
+    <div class="mt-28 flex flex-wrap justify-around min-h-screen">
         <div class="m-8" v-for="product in products" :key="product.id">
             <div class="card card-compact w-96 bg-gradient-to-b from-sky-400 to-sky-200 shadow-xl">
                 <NuxtLink :to="`/${product.id}`">
