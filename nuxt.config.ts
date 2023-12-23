@@ -18,7 +18,6 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['./stores']
   },
-
   devtools: { enabled: false },
 
   googleFonts: {
@@ -29,6 +28,8 @@ export default defineNuxtConfig({
     },
     display: 'swap',
   },
+
+
 
 })
 

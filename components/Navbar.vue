@@ -4,7 +4,25 @@
             <NuxtLink to="/" class="mx-4 text-[#030e12] text-xl">FCommerce</NuxtLink>
         </div>
         <div class="flex-none mx-4">
-            <div v-if="checkAuth">
+            <form @submit.prevent="onSubmit" class="mx-4">
+                <div class="join">
+                    <div>
+                        <div>
+                            <input class="input input-bordered join-item" placeholder="Search" v-model="search" />
+                        </div>
+                    </div>
+                    <select class="select select-bordered join-item">
+                        <option disabled selected>Categories</option>
+                        <option>Sci-fi</option>
+                        <option>Drama</option>
+                        <option>Action</option>
+                    </select>
+                    <div class="indicator">
+                        <button type="submit" ref="submit" class="btn bg-[#fcde67] join-item">Search</button>
+                    </div>
+                </div>
+            </form>
+            <div v-if="checkAuth" class="flex align-baseline">
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                         <div class="indicator">
@@ -58,12 +76,15 @@
 
 <script setup lang="ts">
 import UserService from "@/services/UserService"
+import { useSearchStore } from "~/stores/filter";
+
+const searchStore = useSearchStore()
 
 const cart: any = useCartStore()
 const auth = useAuthStore()
 const username = ref()
 const getUser = UserService.getUser()
-
+const search = ref('')
 
 const myCart = ref(0)
 const checkAuth = ref()
@@ -104,6 +125,11 @@ const getCart = async () => {
     myCart.value = await cart.getCart(userId.value)
 }
 
+const onSubmit = () => {
+    searchStore.setSearch(search.value)
+}
+
+
 onMounted(async () => {
     await verifyAuth()
     getCart()
@@ -114,3 +140,4 @@ onMounted(async () => {
 
 </script>
 
+~/composables/useState
