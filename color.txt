@@ -10,3 +10,11 @@ to right
 bg-gradient-to-r from-green-200 via-green-300 to-blue-500
 to left
 bg-gradient-to-l from-green-200 via-green-300 to-blue-500
+
+
+
+
+new colors:
+peela: #fcde67
+neela: #5bccf6
+kala:  #030e12

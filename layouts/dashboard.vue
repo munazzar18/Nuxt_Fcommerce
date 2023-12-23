@@ -8,17 +8,20 @@
                     <slot>
                     </slot>
                 </div>
-                <div class="drawer-side bg-gradient-to-r from-green-200 via-green-300 to-blue-500">
+                <div class="drawer-side bg-[#5bccf6] ">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-60 h-screen overflow-visible">
                         <!-- Sidebar content here -->
                         <div class="flex flex-col justify-between min-h-full">
                             <div>
                                 <li class="mb-2">
-                                    <NuxtLink to="/">Market/Home</NuxtLink>
+                                    <NuxtLink to="/">Market Place</NuxtLink>
                                 </li>
                                 <li class="mb-2">
-                                    <NuxtLink to="/admin/dashboard">My Products</NuxtLink>
+                                    <NuxtLink to="/admin/dashboard">Dashboard</NuxtLink>
+                                </li>
+                                <li class="mb-2">
+                                    <NuxtLink to="/admin/my-products">My Products</NuxtLink>
                                 </li>
                                 <li class="mb-2">
                                     <NuxtLink to="/admin/add-product">Add New Product</NuxtLink>

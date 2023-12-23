@@ -1,56 +1,56 @@
 <template>
-    <div class="navbar bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900">
+    <div class="navbar bg-[#5bccf6]">
         <div class=" flex-1">
-            <NuxtLink to="/" class="mx-4 text-white text-xl">FCommerce</NuxtLink>
+            <NuxtLink to="/" class="mx-4 text-[#030e12] text-xl">FCommerce</NuxtLink>
         </div>
-        <div class="flex-none">
+        <div class="flex-none mx-4">
             <div v-if="checkAuth">
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                         <div class="indicator">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none"
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#030e12]" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            <span class="badge badge-sm indicator-item bg-gray-900 text-white">{{ myCart }}</span>
+                            <span class="badge badge-sm indicator-item bg-[#5bccf6] text-[#030e12]">{{ myCart }}</span>
                         </div>
                     </div>
-                    <div tabindex="0"
-                        class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 shadow">
+                    <div tabindex="0" class="mt-2 z-[1] card card-compact dropdown-content w-52  bg-[#5bccf6] shadow">
                         <div class="card-body">
-                            <span class="font-bold text-lg text-white">{{ myCart }} items</span>
+                            <span class="font-bold text-lg text-[#030e12]">{{ myCart }} items</span>
                             <div class="card-actions">
-                                <NuxtLink to="/cart"
-                                    class="btn bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 btn-block text-white">
+                                <NuxtLink to="/cart" class="btn  btn-block text-[#030e12]">
                                     View
                                     cart</NuxtLink>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="dropdown dropdown-end">
-                    <div tabindex="0" role="button" class="btn btn-ghost">
-                        <div class="w-20 text-white">
+                <div class="dropdown dropdown-end mx-2">
+                    <div tabindex="0" role="button" class="btn btn-ghost bg-[#fcde67]">
+                        <div class="w-20 text-[#030e12]">
                             Hi, {{ username }}
                         </div>
                     </div>
                     <ul tabindex="0"
-                        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900">
+                        class="menu menu-sm dropdown-content mt-2 z-[1] p-2 shadow rounded-box w-52  bg-[#5bccf6]">
                         <li>
-                            <a class="justify-between text-white">
+                            <a class="justify-between text-[#030e12]">
                                 Profile
                             </a>
                         </li>
-                        <li><a class="text-white">Settings</a></li>
+                        <li v-if="userRole === 'seller'">
+                            <NuxtLink to="/admin/dashboard" class="text-[#030e12]">Dashboard</NuxtLink>
+                        </li>
                         <li>
-                            <a class="text-white" @click="handleLogout">Logout</a>
+                            <a class="text-[#030e12]" @click="handleLogout">Logout</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div tabindex="0" role="button" class="btn btn-ghost" v-else>
-                <a class="text-white" @click="handleLogin">Login</a>
+            <div tabindex="0" role="button" class="btn btn-ghost bg-[#fcde67]" v-else>
+                <a class="text-[#030e12]" @click="handleLogin">Login</a>
             </div>
         </div>
     </div>
@@ -68,9 +68,11 @@ const getUser = UserService.getUser()
 const myCart = ref(0)
 const checkAuth = ref()
 const userId = ref()
+const userRole = ref()
 
 username.value = getUser?.username
 userId.value = getUser?.id
+userRole.value = getUser?.role
 
 myCart.value = cart?.cartCount
 

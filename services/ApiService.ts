@@ -3,8 +3,8 @@ import type { AxiosResponse } from "axios";
 import axios from "axios";
 import JwtService from "./JwtService";
 import VueAxios from "vue-axios";
+import { baseUrl } from "~/helper/constants";
 
-const baseUrl = "http://localhost:5005/api/"
 
 /**
  * @description service to call HTTP request via Axios

@@ -1,24 +1,23 @@
 <template>
-    <div class="mt-4">
+    <div class="mt-4 min-h-screen mx-40">
         <div class="grid grid-cols-12">
-            <div class="col-span-6 mx-4">
-                <div
-                    class="carousel carousel-center w-full h-full rounded-box bg-gradient-to-r from-green-200 via-green-300 to-blue-500">
-                    <div class="carousel-item " v-for="(image, index) in images" :key="index">
-                        <img :src="image" class="w-[100%] aspect-[3/2] object-contain mix-blend-darken" />
+            <div class="col-span-3 mx-1">
+                <div class="rounded-box bg-[#5bccf6] p-2">
+                    <div class="h-96 carousel carousel-vertical rounded-box">
+                        <div class="carousel-item h-full" v-for="image in images" :key="image">
+                            <img :src="image" class="w-[100%] aspect-[3/2] object-contain" />
+                        </div>
                     </div>
+                    <p class="text-slate-600">Scroll Inside to view more</p>
                 </div>
             </div>
-            <div class="col-span-6 mx-4 bg-gradient-to-l from-green-200 via-green-300 to-blue-500 p-6 rounded-box">
+            <div class="col-span-9 mx-1 rounded-box">
                 <div class="mb-4">
                     <h1 class="font-bold text-3xl">{{ product?.title }}</h1>
-                    <span class="text-gray-200">{{ product?.category.category }}</span>
+                    <span class="indicator-item badge border-0 bg-[#5bccf6]">{{ product?.category.category }}</span>
                 </div>
                 <div class="mb-4">
                     <h2 class="font-semibold text-2xl underline underline-offset-4">Rs.{{ product?.price }}</h2>
-                </div>
-                <div class="mb-4 text-lg">
-                    <p>{{ product?.description }}</p>
                 </div>
                 <div class="mb-4">
                     <div class="flex justify-start">
@@ -38,53 +37,53 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-center">
-                    <button class="btn bg-gradient-to-l from-green-200 via-green-300 to-blue-500  w-80 mx-4">Buy
+                <div class="flex justify-start gap-2">
+                    <button class="btn bg-[#030e12] border-0 hover:bg-[#5bccf6] hover:text-[#030e12]  text-[#5bccf6] ">Buy
                         Now</button>
-                    <button class="btn bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 text-white w-80 mx-4">Add To
+                    <button class="btn bg-[#030e12] border-0 hover:bg-[#5bccf6] hover:text-[#030e12] text-[#5bccf6]"
+                        @click="addItemToCart">Add
+                        To
                         Cart</button>
                 </div>
-
+                <div class="mt-8 text-lg text-justify">
+                    <h2 class="font-extrabold text-2xl underline">Description / Specifications</h2>
+                    <p class="mt-8">{{ product?.description }}</p>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import ApiService from '~/services/ApiService';
+import ApiService from '../../../services/ApiService';
+import { baseUrl } from '../../../helper/constants';
+import type { Products } from "../../../helper/interface";
+import { useCartStore } from "@/stores/cart"
 
-
-
-const url = "http://localhost:5005/api/"
+const cart = useCartStore()
 
 const route = useRoute()
 const id: any = route.params.id
 
-interface Product {
-    id: number,
-    title: string,
-    description: string,
-    price: number,
-    quantity: number,
-    category: {
-        id: number,
-        category: string
-    },
-    images: string[]
-}
-
 const quantity = ref(1)
 
-const product = ref<Product>()
+const product = ref<Products>()
 const images = ref()
 
 const getProduct = async () => {
-    const res = await ApiService.get(`${url}product/${id}`)
+    const res = await ApiService.get(`${baseUrl}product/${id}`)
     product.value = res.data?.data
     images.value = product.value?.images
+    console.log("Images:", images.value)
 }
 
-
+const addItemToCart = () => {
+    const formData: any = {
+        productId: id,
+        quantity: 1
+    }
+    cart.addToCart(formData)
+}
 
 onMounted(() => {
     getProduct()

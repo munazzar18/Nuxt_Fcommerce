@@ -1,16 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
   css: [
     "/assets/css/main.css",
     '@fortawesome/fontawesome-svg-core/styles.css'
 
   ],
-  // build: {
-  //   transpile: [""]
-  // },
   modules: [
     '@pinia/nuxt',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-fonts',
+    'nuxt-swiper',
   ],
   pinia: {
     autoImports: ['defineStore']
@@ -20,11 +20,15 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: false },
-  // css: ['~/assets/css/main.css'],
-  //   postcss: {
-  // plugins: [{
-  //   src: '~/plugins/fontawesome.js', mode: 'client',
-  // }],
+
+  googleFonts: {
+    families: {
+      Comfortaa: true,
+      'sans-serif': true,
+      'Josefin+Sans': false,
+    },
+    display: 'swap',
+  },
 
 })
 
