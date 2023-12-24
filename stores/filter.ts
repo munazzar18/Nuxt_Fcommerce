@@ -5,6 +5,7 @@ export const useSearchStore = defineStore('search', {
 
     state: () => ({
         search: '',
+        categoryId: 0,
     }),
 
     actions: {
@@ -12,8 +13,17 @@ export const useSearchStore = defineStore('search', {
             this.search = value;
         },
 
+        setCategory(value: number) {
+            this.categoryId = value
+        },
+
         getSearch() {
             return this.search;
         },
+
+        getCategoryId() {
+            return this.categoryId
+        }
     },
 });
+

@@ -11,11 +11,10 @@
                             <input class="input input-bordered join-item" placeholder="Search" v-model="search" />
                         </div>
                     </div>
-                    <select class="select select-bordered join-item">
-                        <option disabled selected>Categories</option>
-                        <option>Sci-fi</option>
-                        <option>Drama</option>
-                        <option>Action</option>
+                    <select class="select select-bordered join-item" v-model="categoryId" @change="filterByCategory">
+                        <option selected>Categories</option>
+                        <option v-for="category in categories" :value="category.id" :key="category.id">{{ category.category
+                        }}</option>
                     </select>
                     <div class="indicator">
                         <button type="submit" ref="submit" class="btn bg-[#fcde67] join-item">Search</button>
@@ -68,7 +67,7 @@
                 </div>
             </div>
             <div tabindex="0" role="button" class="btn btn-ghost bg-[#fcde67]" v-else>
-                <a class="text-[#030e12]" @click="handleLogin">Login</a>
+                <NuxtLink to="/login" class="text-[#030e12]">Login</NuxtLink>
             </div>
         </div>
     </div>
@@ -76,10 +75,12 @@
 
 <script setup lang="ts">
 import UserService from "@/services/UserService"
+import type { Categories } from "~/helper/interface";
+import { getCategories } from "~/server/getCategories";
 import { useSearchStore } from "~/stores/filter";
 
 const searchStore = useSearchStore()
-
+const categoryId = ref()
 const cart: any = useCartStore()
 const auth = useAuthStore()
 const username = ref()
@@ -106,11 +107,6 @@ const verifyAuth = async () => {
     }
 }
 
-const handleLogin = () => {
-    navigateTo("/login")
-
-}
-
 const handleLogout = async () => {
     checkAuth.value = false
     auth.logout()
@@ -120,6 +116,7 @@ watch(cart, () => {
     getCart()
 })
 
+const categories = ref<Categories[]>([])
 
 const getCart = async () => {
     myCart.value = await cart.getCart(userId.value)
@@ -129,8 +126,13 @@ const onSubmit = () => {
     searchStore.setSearch(search.value)
 }
 
+const filterByCategory = () => {
+    searchStore.setCategory(categoryId.value)
+}
+
 
 onMounted(async () => {
+    categories.value = await getCategories()
     await verifyAuth()
     getCart()
 

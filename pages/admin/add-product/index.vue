@@ -87,7 +87,8 @@
 
 <script setup lang="ts">
 definePageMeta({
-    layout: 'dashboard'
+    layout: 'dashboard',
+    middleware: 'authentication'
 })
 
 import type { Categories } from "@/helper/interface";

@@ -80,7 +80,7 @@ const getProduct = async () => {
 const addItemToCart = () => {
     const formData: any = {
         productId: id,
-        quantity: 1
+        quantity: quantity.value
     }
     cart.addToCart(formData)
 }

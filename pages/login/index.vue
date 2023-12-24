@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-    layout: 'login'
+    layout: 'login',
 })
 import { ref } from 'vue';
 import { useAuthStore, type User } from '~/stores/auth';

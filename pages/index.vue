@@ -37,16 +37,23 @@ const searchStore = useSearchStore()
 const products = ref<Products[]>([])
 
 const search = ref('')
+const categoryId = ref()
 search.value = searchStore.getSearch()
+categoryId.value = searchStore.getCategoryId()
 
 watch(searchStore, (newSearch) => {
     search.value = newSearch.search
     getProducts()
 })
 
+watch(searchStore, (newCategoryId) => {
+    categoryId.value = newCategoryId.categoryId
+    getProducts()
+})
+
 
 const getProducts = async () => {
-    const res = await ApiService.get(`${baseUrl}product?page=1&search=${search.value}`)
+    const res = await ApiService.get(`${baseUrl}product?page=1&search=${search.value}&categoryIds=${categoryId.value === undefined || categoryId.value === 0 ? '' : categoryId.value}`)
     products.value = res.data.data
 }
 

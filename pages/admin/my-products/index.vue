@@ -55,7 +55,8 @@
 
 <script setup lang="ts">
 definePageMeta({
-    layout: 'dashboard'
+    layout: 'dashboard',
+    middleware: 'authentication'
 })
 import type { Products } from "../../../helper/interface"
 import { baseUrl } from "../../../helper/constants"
