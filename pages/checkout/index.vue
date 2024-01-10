@@ -23,8 +23,8 @@
                                 <tbody>
                                     <!-- row 1 -->
                                     <tr>
-                                        <td><img :src="orders?.orderItems[0].product.images[0]" alt="item.product.title"
-                                                class="w-[60%] aspect-[3/2] object-contain" />
+                                        <td><img :src="baseUrl.slice(0, -5) + orders?.orderItems[0].product.images[0]"
+                                                alt="item.product.title" class="w-[60%] aspect-[3/2] object-contain" />
                                         </td>
                                         <td>
                                             {{ orders?.orderItems[0].product.title }}
