@@ -15,3 +15,22 @@ export interface Products {
         category: string
     }
 }
+
+export interface Orders {
+    id: number,
+    total: number,
+    payment_detail: {
+        id: number,
+        amount: number,
+        payment: number,
+        provider: string,
+        status: string,
+
+    },
+    orderItems: [
+        id: number,
+        quantity: number,
+        totalPrice: number,
+        product: Products
+    ]
+}

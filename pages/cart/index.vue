@@ -83,7 +83,7 @@
                 </div>
             </div>
             <div role="alert" class="toast" v-if="alertMessage">
-                <div class="alert bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 text-white">
+                <div class="alert bg-[#5bccf6] text-[#030e12]">
                     <span>{{ alertMessage }}</span>
                 </div>
             </div>
@@ -214,6 +214,15 @@ const checkOut = async () => {
         data.orderItemIds.push(item.orderItems);
         data.quantities.push(item.quantities);
     });
+
+    try {
+        const res = await ApiService.post(`${url}order`, data)
+        alertMessage.value = res.data.alertMessage
+        dismissAlert()
+    } catch (error) {
+        console.log("An error occured:", error)
+    }
+
 
 }
 

@@ -53,9 +53,9 @@
                     <ul tabindex="0"
                         class="menu menu-sm dropdown-content mt-2 z-[1] p-2 shadow rounded-box w-52  bg-[#5bccf6]">
                         <li>
-                            <a class="justify-between text-[#030e12]">
+                            <NuxtLink to="/customer/my-profile" class="justify-between text-[#030e12]">
                                 Profile
-                            </a>
+                            </NuxtLink>
                         </li>
                         <li v-if="userRole === 'seller'">
                             <NuxtLink to="/admin/dashboard" class="text-[#030e12]">Dashboard</NuxtLink>
