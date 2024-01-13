@@ -38,7 +38,8 @@
                                 </tbody>
                             </table>
                             <div class="flex justify-end mt-24 px-4">
-                                <button @click="handlePayNow(orders.id)"
+                                <button @click="handlePayNow(orders?.id)"
+                                    :disabled="orders?.payment_detail.status === 'paid'"
                                     class="btn bg-[#030e12] border-0 hover:bg-[#fcde67] hover:text-[#030e12] text-[#5bccf6]">Pay
                                     Now</button>
                             </div>
@@ -77,8 +78,11 @@ const getMyOrders = async () => {
 
 const handlePayNow = async (orderId: number) => {
     const res = await ApiService.get(`${baseUrl}payment-detail/session/${orderId}`)
+    const id = res.data.data.id
+    const url = res.data.data.url
     if (process.client) {
-        window.location.href = res.data.data
+        window.localStorage.setItem('stripeId', id)
+        window.location.href = url
     }
 }
 
